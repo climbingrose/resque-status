@@ -86,7 +86,8 @@ module Resque
         def enqueue(klass, options = {})
           uuid = Resque::Plugins::Status::Hash.generate_uuid
           if Resque.enqueue(klass, uuid, options)
-            Resque::Plugins::Status::Hash.create uuid, :options => options
+            name = "#{klass}(#{options.inspect unless options.empty?})"
+            Resque::Plugins::Status::Hash.create uuid, :options => options, name: name
             uuid
           else
             nil

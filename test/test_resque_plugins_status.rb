@@ -26,6 +26,10 @@ class TestResquePluginsStatus < Test::Unit::TestCase
         assert_contains Resque::Plugins::Status::Hash.status_ids, @uuid
       end
 
+      should "set name of the status" do
+        assert_includes Resque::Plugins::Status::Hash.get(@uuid).name, "WorkingJob"
+      end
+
       should "return a UUID" do
         assert_match(/^\w{32}$/, @uuid)
       end
